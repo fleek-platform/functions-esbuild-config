@@ -1,19 +1,10 @@
 import fs from 'node:fs';
 import type { PluginBuild } from 'esbuild';
 
-import {
-  supportedRuntimeModules,
-  unsupportedRuntimeModules,
-} from '../runtimeModules';
+import { supportedRuntimeModules, unsupportedRuntimeModules } from '../runtimeModules';
 
-const replaceLineByMatchRegExpr = ({
-  contents,
-  moduleName,
-}: { contents: string; moduleName: string }) => {
-  const reImportSyntax = new RegExp(
-    `import\\s*[\\w\\W]*?\\s*from\\s+["']${moduleName}["']`,
-    'g',
-  );
+const replaceLineByMatchRegExpr = ({ contents, moduleName }: { contents: string; moduleName: string }) => {
+  const reImportSyntax = new RegExp(`import\\s*[\\w\\W]*?\\s*from\\s+["']${moduleName}["']`, 'g');
   const reModuleName = new RegExp(`["']${moduleName}["']`, 'g');
   const convention = `"node:${moduleName}"`;
   const lns = contents.split('\n');
@@ -34,10 +25,7 @@ const applyNodeProtocolConvention = async ({ path }: { path: string }) => {
   const buffer = await fs.promises.readFile(path, 'utf8');
   const contents = buffer.toString();
 
-  const output = [
-    ...supportedRuntimeModules,
-    ...unsupportedRuntimeModules,
-  ].reduce((acc, moduleName) => {
+  const output = [...supportedRuntimeModules, ...unsupportedRuntimeModules].reduce((acc, moduleName) => {
     return replaceLineByMatchRegExpr({
       contents: acc,
       moduleName,
@@ -49,9 +37,7 @@ const applyNodeProtocolConvention = async ({ path }: { path: string }) => {
   };
 };
 
-export const nodeProtocolImportSpecifier = ({
-  onError,
-}: { onError: () => void }) => ({
+export const nodeProtocolImportSpecifier = ({ onError }: { onError: (err: unknown) => void }) => ({
   name: 'nodeProtocolImportSpecifier',
   setup(build: PluginBuild) {
     build.onLoad({ filter: /\.js$/ }, async ({ path }) => {
@@ -62,7 +48,7 @@ export const nodeProtocolImportSpecifier = ({
 
         return output;
       } catch (err) {
-        onError();
+        onError(err);
       }
     });
 

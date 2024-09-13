@@ -15,17 +15,14 @@ export const asyncLocalStoragePolyfill: () => Plugin = () => {
         }
       });
 
-      build.onLoad(
-        { filter: /.*/, namespace: 'replace-als' },
-        async (args: OnLoadArgs) => {
-          const contents = await fs.readFile(args.path, 'utf8');
+      build.onLoad({ filter: /.*/, namespace: 'replace-als' }, async (args: OnLoadArgs) => {
+        const contents = await fs.readFile(args.path, 'utf8');
 
-          return {
-            contents,
-            loader: 'js',
-          };
-        },
-      );
+        return {
+          contents,
+          loader: 'js',
+        };
+      });
     },
   };
 };

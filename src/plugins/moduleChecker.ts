@@ -26,10 +26,7 @@ export const moduleChecker: (args: ModuleCheckerArgs) => Plugin = (args) => {
       });
 
       build.onResolve({ filter: /.*/ }, ({ path }: OnResolveArgs) => {
-        if (
-          unsupportedModules.includes(path) ||
-          unsupportedModules.includes(`node:${path}`)
-        ) {
+        if (unsupportedModules.includes(path) || unsupportedModules.includes(`node:${path}`)) {
           unsupportedModulesUsed.add(path);
 
           return {

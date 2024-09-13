@@ -1,7 +1,7 @@
 {
   "name": "@fleek-platform/functions-esbuild-config",
   "version": "1.0.0",
-  "description": "",
+  "description": "ESBuild config for Fleek Functions",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,7 +10,7 @@
     "lint": "eslint 'src/**/*.{js,ts}'",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "prepare": "husky"
   },
   "keywords": [
@@ -23,7 +23,12 @@
     "fleek-functions",
     "edge"
   ],
-  "author": "",
+  "lint-staged": {
+    "*": [
+      "prettier . --check",
+      "eslint"
+    ]
+  },
   "license": "MIT",
   "engines": {
     "node": ">=18"
