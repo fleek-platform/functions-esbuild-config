@@ -1,6 +1,6 @@
 import type { OnResolveArgs, Plugin, PluginBuild } from 'esbuild';
 
-import { unsupportedRuntimeModules } from '../runtimeModules';
+import { unsupportedRuntimeModules } from '../runtimeModules.js';
 
 const unsupportedModules = unsupportedRuntimeModules.map((it) => `node:${it}`);
 

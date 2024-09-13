@@ -37,7 +37,7 @@ const applyNodeProtocolConvention = async ({ path }: { path: string }) => {
   };
 };
 
-export const nodeProtocolImportSpecifier = ({ onError }: { onError: (err: unknown) => void }) => ({
+export const nodeProtocolImportSpecifier = ({ onError }: { onError?: (err: unknown) => void }) => ({
   name: 'nodeProtocolImportSpecifier',
   setup(build: PluginBuild) {
     build.onLoad({ filter: /\.js$/ }, async ({ path }) => {
@@ -48,7 +48,9 @@ export const nodeProtocolImportSpecifier = ({ onError }: { onError: (err: unknow
 
         return output;
       } catch (err) {
-        onError(err);
+        if (onError) {
+          onError(err);
+        }
       }
     });
 

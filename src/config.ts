@@ -1,8 +1,8 @@
 import { BuildOptions, Plugin } from 'esbuild';
 import path from 'node:path';
-import { moduleChecker } from './plugins/moduleChecker';
-import { asyncLocalStoragePolyfill } from './plugins/asyncLocalStoragePolyfill';
-import { nodeProtocolImportSpecifier } from './plugins/nodeProtocolImportSpecifier';
+import { moduleChecker } from './plugins/moduleChecker.js';
+import { asyncLocalStoragePolyfill } from './plugins/asyncLocalStoragePolyfill.js';
+import { nodeProtocolImportSpecifier } from './plugins/nodeProtocolImportSpecifier.js';
 
 export interface FleekBuildOptions {
   filePath: string;
