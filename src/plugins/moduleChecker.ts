@@ -15,8 +15,6 @@ export const moduleChecker: (args: ModuleCheckerArgs) => Plugin = (args) => {
     name: 'moduleChecker',
     setup: (build: PluginBuild) => {
       build.onLoad({ filter: /.*/, namespace: 'unsupported' }, (args) => {
-        console.log('unsupported', args);
-
         return {
           contents: `
             throw new Error('Unsupported module: ${args.path}');

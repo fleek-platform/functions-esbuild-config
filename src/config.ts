@@ -3,6 +3,7 @@ import path from 'node:path';
 import { moduleChecker } from './plugins/moduleChecker.js';
 import { asyncLocalStoragePolyfill } from './plugins/asyncLocalStoragePolyfill.js';
 import { nodeProtocolImportSpecifier } from './plugins/nodeProtocolImportSpecifier.js';
+import { fsPolyfill } from './plugins/fsPolyfill.js';
 
 export interface FleekBuildOptions {
   filePath: string;
@@ -25,14 +26,7 @@ export const defaultOptions: Omit<BuildOptions, 'entryPoints' | 'outfile' | 'plu
 };
 
 export const createFleekBuildConfig = (options: FleekBuildOptions): BuildOptions => {
-  const {
-    filePath,
-    bundle,
-    env,
-    outFile = 'function.js',
-    tempDir = process.env.TEMP || '.fleek',
-    onError = console.error,
-  } = options;
+  const { filePath, bundle, env, outFile = 'function.js', tempDir = '.fleek', onError = console.error } = options;
 
   const unsupportedModulesUsed = new Set<string>();
   const filePathWorkDir = path.dirname(filePath);
@@ -41,7 +35,7 @@ export const createFleekBuildConfig = (options: FleekBuildOptions): BuildOptions
   const plugins: Plugin[] = [moduleChecker({ unsupportedModulesUsed })];
 
   if (bundle) {
-    plugins.push(asyncLocalStoragePolyfill(), nodeProtocolImportSpecifier({ onError }));
+    plugins.push(asyncLocalStoragePolyfill(), fsPolyfill(), nodeProtocolImportSpecifier({ onError }));
   }
 
   const buildOptions: BuildOptions = {

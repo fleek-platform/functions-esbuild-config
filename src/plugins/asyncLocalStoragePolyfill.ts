@@ -8,8 +8,9 @@ export const asyncLocalStoragePolyfill: () => Plugin = () => {
     setup(build: PluginBuild) {
       build.onResolve({ filter: /async_hooks/ }, (args: OnResolveArgs) => {
         if (args.path === 'async_hooks' || args.path === 'node:async_hooks') {
+          const filePath = path.resolve(__dirname, 'polyfills', 'async_hooks.js');
           return {
-            path: path.resolve(__dirname, 'polyfills', 'async_hooks.js'),
+            path: filePath,
             namespace: 'replace-als',
           };
         }

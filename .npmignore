@@ -6,3 +6,5 @@ commintlint.config.js
 .prettierrc
 .prettierignore
 .husky/
+node_modules/
+.github

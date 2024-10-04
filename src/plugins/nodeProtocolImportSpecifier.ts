@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import type { PluginBuild } from 'esbuild';
 
-import { supportedRuntimeModules, unsupportedRuntimeModules } from '../runtimeModules';
+import { supportedRuntimeModules, unsupportedRuntimeModules } from '../runtimeModules.js';
 
 const replaceLineByMatchRegExpr = ({ contents, moduleName }: { contents: string; moduleName: string }) => {
   const reImportSyntax = new RegExp(`import\\s*[\\w\\W]*?\\s*from\\s+["']${moduleName}["']`, 'g');
