@@ -3,6 +3,7 @@
   "version": "0.0.4",
   "description": "ESBuild config for Fleek Functions",
   "module": "./dist/index.js",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "repository": "https://github.com/fleek-platform/functions-esbuild-config",
   "homepage": "https://github.com/fleek-platform/functions-esbuild-config",
