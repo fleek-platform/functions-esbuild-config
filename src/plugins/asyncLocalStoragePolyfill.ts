@@ -1,6 +1,9 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { OnLoadArgs, OnResolveArgs, Plugin, PluginBuild } from 'esbuild';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const asyncLocalStoragePolyfill: () => Plugin = () => {
   return {
