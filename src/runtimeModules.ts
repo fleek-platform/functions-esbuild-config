@@ -2,6 +2,7 @@
 // due to environment constraints
 // optimized for edge computing
 export const supportedRuntimeModules = [
+  'async_hooks',
   'buffer',
   'crypto',
   'domain',
@@ -15,9 +16,6 @@ export const supportedRuntimeModules = [
   'url',
   'util',
   'zlib',
-];
-
-export const unsupportedRuntimeModules = [
   'assert/strict',
   'child_process',
   'cluster',
@@ -53,3 +51,5 @@ export const unsupportedRuntimeModules = [
   'webcrypto',
   'worker_threads',
 ];
+
+export const unsupportedRuntimeModules = [];
