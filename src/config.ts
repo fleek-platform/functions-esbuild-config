@@ -1,9 +1,7 @@
 import { BuildOptions, Plugin } from 'esbuild';
 import path from 'node:path';
 import { moduleChecker } from './plugins/moduleChecker.js';
-import { asyncLocalStoragePolyfill } from './plugins/asyncLocalStoragePolyfill.js';
 import { nodeProtocolImportSpecifier } from './plugins/nodeProtocolImportSpecifier.js';
-import { fsPolyfill } from './plugins/fsPolyfill.js';
 
 export interface FleekBuildOptions {
   filePath: string;
@@ -35,7 +33,7 @@ export const createFleekBuildConfig = (options: FleekBuildOptions): BuildOptions
   const plugins: Plugin[] = [moduleChecker({ unsupportedModulesUsed })];
 
   if (bundle) {
-    plugins.push(asyncLocalStoragePolyfill(), fsPolyfill(), nodeProtocolImportSpecifier({ onError }));
+    plugins.push(nodeProtocolImportSpecifier({ onError }));
   }
 
   const buildOptions: BuildOptions = {
@@ -48,10 +46,14 @@ export const createFleekBuildConfig = (options: FleekBuildOptions): BuildOptions
   };
 
   buildOptions.banner = {
-    js: `import { Buffer } from "node:buffer";
+    js: `
+import { Buffer } from "node:buffer";
+import { AsyncLocalStorage } from "node:async_hooks";
+globalThis.AsyncLocalStorage = AsyncLocalStorage;
 globalThis.fleek={env:{${Object.entries(env)
       .map(([key, value]) => `${key}: "${value}"`)
-      .join(',')}}};`,
+      .join(',')}}};
+`,
   };
 
   return buildOptions;

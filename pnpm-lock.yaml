@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       esbuild:
-        specifier: ^0.24.0
+        specifier: '>=0.18.0'
         version: 0.24.0
     devDependencies:
       '@commitlint/cli':
