@@ -36,6 +36,12 @@ export const createFleekBuildConfig = (options: FleekBuildOptions): BuildOptions
     plugins.push(nodeProtocolImportSpecifier({ onError }));
   }
 
+  // Translate envs so we can use them in the define options
+  const envs = Object.entries(env).reduce(
+    (acc, [key, value]) => ({ ...acc, [`process.env.${key}`]: `"${value}"` }),
+    {},
+  );
+
   const buildOptions: BuildOptions = {
     ...defaultOptions,
     entryPoints: [filePath],
@@ -43,6 +49,9 @@ export const createFleekBuildConfig = (options: FleekBuildOptions): BuildOptions
     outfile: path.join(tempDir, outFile),
     plugins,
     nodePaths: [nodeModulesPath],
+    define: {
+      ...envs,
+    },
   };
 
   buildOptions.banner = {
@@ -51,9 +60,22 @@ import { Buffer } from "node:buffer";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { PerformanceObserver, performance } from 'node:perf_hooks';
 globalThis.AsyncLocalStorage = AsyncLocalStorage;
-globalThis.fleek={env:{${Object.entries(env)
+globalThis.process = {
+  ...globalThis.process,
+  env: {
+    ...globalThis.process.env,
+    ${Object.entries(env)
       .map(([key, value]) => `${key}: "${value}"`)
-      .join(',')}}};
+      .join(',')}
+    }
+};
+globalThis.fleek = {
+  env: {
+    ${Object.entries(env)
+      .map(([key, value]) => `${key}: "${value}"`)
+      .join(',')}
+    }
+};
 `,
   };
 
