@@ -1,6 +1,6 @@
 {
   "name": "@fleek-platform/functions-esbuild-config",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "ESBuild config for Fleek Functions",
   "module": "./dist/index.js",
   "main": "./dist/index.js",
@@ -20,7 +20,8 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --build -v",
+    "build:ci": "pnpm run build",
     "lint": "eslint 'src/**/*.{js,ts}'",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
