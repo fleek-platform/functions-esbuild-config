@@ -20,7 +20,7 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --build -v",
     "lint": "eslint 'src/**/*.{js,ts}'",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
