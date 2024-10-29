@@ -9,7 +9,8 @@
     "strict": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "allowJs": true
+    "allowJs": true,
+    "incremental": false
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules/**", "coverage", "src/**/*.spec.ts"]
