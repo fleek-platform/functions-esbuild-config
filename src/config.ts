@@ -56,10 +56,13 @@ export const createFleekBuildConfig = (options: FleekBuildOptions): BuildOptions
 
   buildOptions.banner = {
     js: `
-import { Buffer } from "node:buffer";
-import { AsyncLocalStorage } from "node:async_hooks";
-import { PerformanceObserver, performance } from 'node:perf_hooks';
-globalThis.AsyncLocalStorage = AsyncLocalStorage;
+import { Buffer as _globalFleekBuffer } from "node:buffer";
+import { AsyncLocalStorage as _globalFleekAsyncLocalStorage } from "node:async_hooks";
+import { PerformanceObserver as _globalFleekPerformanceObserver, performance as _globalFleekPerformance } from 'node:perf_hooks';
+globalThis.Buffer = _globalFleekBuffer;
+globalThis.AsyncLocalStorage = _globalFleekAsyncLocalStorage;
+globalThis.performance = _globalFleekPerformance;
+globalThis.PerformanceObserver = _globalFleekPerformanceObserver;
 globalThis.process = {
   ...globalThis.process,
   env: {
