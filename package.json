@@ -21,6 +21,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc --build -v",
+    "build:ci": "pnpm run build",
     "lint": "eslint 'src/**/*.{js,ts}'",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
